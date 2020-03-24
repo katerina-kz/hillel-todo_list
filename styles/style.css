@@ -1,0 +1,101 @@
+body {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    width: 900px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-group {
+    margin-right: 10px;
+    margin-bottom: 0;
+    position: relative;
+}
+
+.inner-value{
+    display: inline-block;
+}
+
+.hidden {
+    display: none;
+}
+
+.list-group {
+    margin-top: 10px;
+    width: 900px;
+}
+
+.error-of-task {
+    position: absolute;
+    top: 100%;
+    color: red;
+    z-index: 2;
+}
+
+.select-priority {
+    margin-right: 10px;
+}
+
+.done, .edit, .confirm-btn {
+    padding: 0;
+    margin-right: 5px;
+    float: right;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    background-color: transparent;
+    border: 0;
+}
+
+.done:not(:disabled):not(.disabled):hover,
+.edit:not(:disabled):not(.disabled):hover,
+.confirm-btn:not(:disabled):not(.disabled):hover {
+    opacity: .75;
+}
+
+.line-through {
+    text-decoration: line-through;
+}
+
+.confirm-btn {
+    float: none;
+    margin-left: 10px;
+}
+
+.delete-popup {
+    text-align: center;
+}
+
+.delete-popup .confirm {
+    margin-left: 5px;
+}
+
+.status {
+    float: right;
+    margin-right: 10px;
+}
+
+.date-added {
+    float: right;
+    font-size: 0.7rem;
+    margin-right: 50px;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.yellow {
+    color: #d4bb0d;
+}
