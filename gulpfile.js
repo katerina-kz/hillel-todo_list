@@ -1,39 +1,44 @@
 "use strict";
 
-var gulp = require("gulp");
-var sass = require("gulp-sass");
-var csso = require("gulp-csso");
-var rename = require("gulp-rename");
-var postcss = require("gulp-postcss");
-var autoprefixer = require("autoprefixer");
-var del = require("del");
-var imagemin = require('gulp-imagemin');
-var server = require("browser-sync").create();
+let gulp = require("gulp");
+let sass = require("gulp-sass");
+let babel = require("gulp-babel");
+let rename = require("gulp-rename");
+let postcss = require("gulp-postcss");
+let autoprefixer = require("autoprefixer");
+let uglify = require('gulp-uglify');
+let concat = require("gulp-concat");
+let del = require("del");
+let eslint = require('gulp-eslint');
+let sourcemaps = require('gulp-sourcemaps');
+let imagemin = require('gulp-imagemin');
+let server = require("browser-sync").create();
 
-gulp.task("css", function () {
+gulp.task("css", () => {
     return gulp.src("src/styles/style.scss")
-        .pipe(sass())
+    .pipe(sourcemaps.init())
+        .pipe(sass( { outputStyle: 'compressed'} ))
         .pipe(postcss([
             autoprefixer()
         ]))
-        .pipe(gulp.dest("build/styles"))
-        .pipe(csso())
+        .pipe(concat('style.css'))
         .pipe(rename("style.min.css"))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest("build/styles"))
         .pipe(server.stream());
 });
 
-gulp.task("clean", function () {
+gulp.task("clean", () => {
     return del(['build/', '!build/img']);
 });
 
-gulp.task("images", function() {
+gulp.task("images", () => {
     return gulp.src("src/images/*.{png,jpg,svg}")
         .pipe(imagemin())
         .pipe(gulp.dest("build/images"));
 });
 
-gulp.task("html", function() {
+gulp.task("html", () => {
     return gulp.src([
         "src/*.html"
     ], {
@@ -42,16 +47,31 @@ gulp.task("html", function() {
         .pipe(gulp.dest("build"));
 });
 
-gulp.task("js", function() {
+gulp.task("js", () => {
     return gulp.src([
         "src/js/**/*.js"
     ], {
         base: "src"
     })
-        .pipe(gulp.dest("build"));
+    .pipe(sourcemaps.init())
+        .pipe(eslint( {
+            "rules": {
+                "semi": 2
+            },
+        }))
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError())
+        .pipe(babel({
+            "presets": ["@babel/preset-env"] 
+        }))
+        .pipe(uglify()) 
+        .pipe(concat('bundle.js'))
+        .pipe(rename("bundle.min.js"))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest("build/js"))
 });
 
-gulp.task("json", function() {
+gulp.task("json", () => {
     return gulp.src([
         "src/*.json"
     ], {
@@ -61,10 +81,10 @@ gulp.task("json", function() {
 });
 
 gulp.task("server", function () {
-    server.init({
-        server: "build/",
-        open: true,
-    });
+    // server.init({
+    //     server: "build/",
+    //     open: true,
+    // 
 
     gulp.watch("src/js/**/*.js", gulp.series("js"));
     gulp.watch("src/styles/**/*.scss", gulp.series("css"));
@@ -85,5 +105,5 @@ gulp.task("build", gulp.series(
     "css"
 ));
 
-gulp.task("start", gulp.series("build"));
+gulp.task("start", gulp.series("build", "server"));
 

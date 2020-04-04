@@ -1,6 +1,8 @@
 // стили на scss не меняла сильно, так как scss создавался для проверки компиляции 
+@import 'mixin';
 
 body {
+    @include mainSet;
     display: flex;
     height: 100vh;
     justify-content: center;
