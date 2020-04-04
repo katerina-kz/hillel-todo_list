@@ -1,3 +1,5 @@
+// стили на scss не меняла сильно, так как scss создавался для проверки компиляции 
+
 body {
     display: flex;
     height: 100vh;
@@ -43,7 +45,9 @@ body {
     margin-right: 10px;
 }
 
-.done, .edit, .confirm-btn {
+.done, 
+.edit, 
+.confirm-btn {
     padding: 0;
     margin-right: 5px;
     float: right;
@@ -71,10 +75,10 @@ body {
 
 .delete-popup {
     text-align: center;
-}
-
-.delete-popup .confirm {
-    margin-left: 5px;
+    
+    .confirm {
+        margin-left: 5px;
+    }
 }
 
 .status {
