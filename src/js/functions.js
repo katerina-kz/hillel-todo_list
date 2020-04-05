@@ -3,8 +3,8 @@
 // ----------------------------------- tooltip 
 
 $(function () {
-    $('[data="tooltip"]').tooltip()
-})
+    $('[data="tooltip"]').tooltip();
+});
 
 // -----------------------------------  localStorage
 
@@ -16,22 +16,22 @@ let createLocalStorage = () => {
     }
 
     return taskArray;
-}
+};
 
 let setData = () => {
     let data = JSON.stringify(taskArray);
     localStorage.setItem('Tasks', data); 
-}
+};
 
 let getData = () => { 
     let data = JSON.stringify(taskArray);
     localStorage.getItem('Tasks', data);
-}
+};
 
 let updateStorageData = () => {
     setData();
     getData();
-}
+};
 
 let setAjaxDataToLocalStorage = () => {
     
@@ -42,18 +42,18 @@ let setAjaxDataToLocalStorage = () => {
     })
     .then(function(res) {
         localStorage.setItem('Data file', JSON.stringify(res)); 
-    })
-}
+    });
+};
 
 let getAjaxDataFromStorage = () => {
     let resArray = JSON.parse(localStorage.getItem('Data file')); 
 
     return resArray;
-}
+};
 
 // ----------------------------------------------------------->
 
-  
+  console.log('some');
 let createSelectPriorityInput = (array, parent) => {
     $('<select>', {
         class: 'form-control select-priority-input',
@@ -65,8 +65,8 @@ let createSelectPriorityInput = (array, parent) => {
                 text: element,
                 class: element,
             }).appendTo('#exampleFormControlSelect2');
-        })
-}
+        });
+};
 
 let createSelectStatusInput = (array) => {
     $('<select>', {
@@ -79,22 +79,22 @@ let createSelectStatusInput = (array) => {
                 text: element,
                 class: element,
             }).appendTo('#exampleFormControlSelect1');
-        })
-}
+        });
+};
 
 let createButton = (parent, attr, value) => {
     $('<button>', {
         class: attr,
         text: value,
         }).appendTo(parent);
-}
+};
 
 let checkTasks = () => {
     addTaskTable();
     if (taskArray.length !== 0) {
         createTableRows();
     } 
-}
+};
 
 let addPriorities = () => {
     document.querySelector('.btn-success').addEventListener('click', function() {
@@ -118,7 +118,7 @@ let addPriorities = () => {
         } else {
             return;
         }
-    })
+    });
 };
 
 let checValue = () => {
@@ -134,7 +134,7 @@ let checValue = () => {
         return;
     } 
     return true;
-}
+};
         
 let addNewTaskButton = () => {
     $('<button>', {
@@ -143,13 +143,13 @@ let addNewTaskButton = () => {
         text: 'Add new task'
     }).appendTo('.modal-footer');
     
-}
+};
 
 let addTaskTable = () => {
     $('<table>', {
         class: 'list-group list-group-flush hidden',
     }).appendTo('.wrapper');
-}
+};
 
 let createTableRows = () => {
   $('.list-group').removeClass('hidden');
@@ -178,7 +178,7 @@ let createTableRows = () => {
         
         $(`.list-group-item[data-id="${element.id}"]`).append(time);
     });
-}
+};
 
 let checkData = (element) => {
     let data = getAjaxDataFromStorage();
@@ -189,7 +189,7 @@ let checkData = (element) => {
         } else {
             $(element).css("color", "black");
         }
-    })
+    });
     
     for (let value of data.statuses) {
         if (value === element.status) {
@@ -200,10 +200,10 @@ let checkData = (element) => {
         } else {
             $(`.status-${element.id}`).remove();
             $(`.list-group-item[data-id="${element.id}"]`).append(createStatusBlock("Status is not found", element.id));
-            element.error = "error"
+            element.error = "error";
         }
     }
-}
+};
 
 let getDataId = () => {
      if (taskArray[taskArray.length - 1] !== undefined) {
@@ -213,7 +213,7 @@ let getDataId = () => {
     }
    
     return dataId;
-}
+};
 
 let setPriorityColor = (select, element) => {
     if (select === 'Minor') {
@@ -223,14 +223,14 @@ let setPriorityColor = (select, element) => {
     } else if (select === "High") {
         $(element).addClass('red');
     }
-}
+};
 
 let createStatusBlock = (value, dataId) => {
     return $('<div>', {
         class: `status status-${dataId}`,
         text: `Status: ${value}`
     });
-}
+};
 
 let setDefaultStatus = () => {
     let data = getAjaxDataFromStorage();
@@ -241,9 +241,9 @@ let setDefaultStatus = () => {
         } else {
             return "There is no status";
         }
-    })
+    });
     return "Open (default)";
-}
+};
 
 let addNewTask = () => {
     const form = document.forms.addTask;
@@ -282,7 +282,7 @@ let addNewTask = () => {
         priority: document.querySelector('.select-priority-input').value,
         status: defaultStatus,
         date: time,
-    }
+    };
 
     taskArray.push(newTask);
 
@@ -292,14 +292,14 @@ let addNewTask = () => {
     updateStorageData();
 
     return dataId;
-}
+};
 
 let addTime = (time) => {
     return $('<span>', {
         class: 'date-added',
         text: `Date and time added: ${time}`,
     });
-}
+};
 
 let addListenerToAddNewTask = () => {
     $('.add-new-task').click(function() {
@@ -310,7 +310,7 @@ let addListenerToAddNewTask = () => {
         $('select').remove();
         $('.select-priority').remove();  
     });
-}
+};
 
 let addCloseButton = (dataId) => {
     return $('<button>', {
@@ -318,7 +318,7 @@ let addCloseButton = (dataId) => {
         class: "close",
         append: `<img src="images/times-solid.svg" data-id="${dataId}" class="close-btn", width="20" height="20" alt="image close">`,
     });
-}
+};
 
 let addDoneButton = (dataId) => {
     return $('<button>', {
@@ -326,7 +326,7 @@ let addDoneButton = (dataId) => {
         class:"done",
         append: `<img src="images/check-solid.svg" data-id="${dataId}" class="done-btn" width="20" height="20" alt="image done">`,
     });
-}
+};
 
 let addEditButton = (dataId) => {
     return $('<button>', {
@@ -334,7 +334,7 @@ let addEditButton = (dataId) => {
         class: "edit",
         append: `<img src="images/pencil-alt-solid.svg" data-id="${dataId}" class="edit-btn" width="20" height="20" alt="image edit">`,
     });
-}
+};
 
 let getId = (element, attributeName) => {
     let value = element.getAttribute(attributeName);
@@ -348,7 +348,7 @@ let getId = (element, attributeName) => {
       }
     
     return value;
-}
+};
 
 // --------------------------------------------- complete an action with a task
 
@@ -387,13 +387,13 @@ let addListenerToActionsWithTasks = () => {
         }
 
     });
-})
+});
 };
 
 let setDoneToTask = (selectedId) => {
    if ($(`.list-group-item[data-id="${selectedId}"] .inner-value`).hasClass('line-through')) {
 
-        $(`.list-group-item[data-id="${selectedId}"] .inner-value`).toggleClass('line-through')
+        $(`.list-group-item[data-id="${selectedId}"] .inner-value`).toggleClass('line-through');
          
         taskArray.find(function(element) {
             if (element.id === selectedId) {
@@ -401,7 +401,7 @@ let setDoneToTask = (selectedId) => {
                 $(`.status-${element.id}`).empty();
                 $(`.status-${element.id}`).text("Status: In progress");
             }
-        })
+        });
     
     } else {
         $(`.list-group-item[data-id="${selectedId}"] .inner-value`).toggleClass('line-through');
@@ -412,11 +412,11 @@ let setDoneToTask = (selectedId) => {
                 $(`.status-${element.id}`).empty();
                 $(`.status-${element.id}`).text("Status: Done");
             }
-        })
+        });
 
     }
    updateStorageData();
-}
+};
 
 
 let setCloseToTask = (selectedId) => {
@@ -438,8 +438,8 @@ let setCloseToTask = (selectedId) => {
             $('.delete-popup').remove();
         }
         updateStorageData();
-    })
-}
+    });
+};
 
 let setEditToTask = (selectedId, value) => {
 
@@ -474,7 +474,7 @@ let setEditToTask = (selectedId, value) => {
     $(`.list-group-item[data-id="${selectedId}"] button.confirm-btn`).append(`<img src="images/check-solid.svg" data-id="${selectedId}" class="confirm-btn-img" width="20" height="20" alt="image done">`);
     
     editData(selectedId);
-}
+};
 
 let deleteData = (selectedId) => {
     taskArray.forEach(function(element, index) {
@@ -484,15 +484,15 @@ let deleteData = (selectedId) => {
             updateStorageData();
             return;
         }
-    })
-}
+    });
+};
 
 let createInnerValue = () => {
     return $('<p>', {
             class: 'inner-value',
             text: $('.edit-input').val()
-        })
-}
+        });
+};
 
 let editData = (selectedId) => {
 
@@ -504,7 +504,7 @@ let editData = (selectedId) => {
                 element.priority = document.querySelector('.select-priority-input').value;
                 element.status = document.querySelector('.select-status-input').value;
                 updateStorageData();
-            }
+            };
             
             setPriorityColor(element.priority, `.list-group-item[data-id="${element.id}"]`);
             
@@ -514,7 +514,7 @@ let editData = (selectedId) => {
             let timeBlock = addTime(element.date);
             let statusBlock = createStatusBlock(element.status, element.id);
 
-            $(`.list-group-item[data-id="${element.id}"]`).html(`<p class="inner-value">${element.value}</p>`)
+            $(`.list-group-item[data-id="${element.id}"]`).html(`<p class="inner-value">${element.value}</p>`);
             
             $(`.list-group-item[data-id="${element.id}"]`).append(closeBtn);
             $(`.list-group-item[data-id="${element.id}"]`).append(doneBtn);
@@ -529,4 +529,4 @@ let editData = (selectedId) => {
             
         });
     });  
-}
+};

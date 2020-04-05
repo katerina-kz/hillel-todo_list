@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "gulp start",
+    "default": "gulp default",
     "style": "gulp css",
     "delete": "gulp clean",
     "images": "gulp images"

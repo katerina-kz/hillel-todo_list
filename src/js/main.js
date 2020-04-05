@@ -11,7 +11,6 @@ checkTasks();
 
 addListenerToActionsWithTasks();
 
-
 getAjaxDataFromStorage();
 setAjaxDataToLocalStorage();
 
