@@ -53,7 +53,6 @@ let getAjaxDataFromStorage = () => {
 
 // ----------------------------------------------------------->
 
-  console.log('some');
 let createSelectPriorityInput = (array, parent) => {
     $('<select>', {
         class: 'form-control select-priority-input',
