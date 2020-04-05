@@ -85,7 +85,6 @@ gulp.task("server", function () {
     server.init({
         watch: true,
         server: "./build",
-        port :"52330"
     });
 
     gulp.watch(path.src.js, gulp.series("js"));
