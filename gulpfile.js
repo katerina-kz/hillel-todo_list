@@ -12,7 +12,6 @@ const del = require("del");
 const eslint = require('gulp-eslint');
 const sourcemaps = require('gulp-sourcemaps');
 const imagemin = require('gulp-imagemin');
-const install = require("gulp-install");
 const server = require('browser-sync').create();
 
 const path = {
@@ -77,13 +76,6 @@ gulp.task("js", () => {
         .pipe(server.stream());
 });
 
-// без данного плагина brouserSync не подтягивает файлы с node_modules и открывает index.html с кучей ошибок в консоле. Но если этот же index.html запустить в папке /build через Live Server, все работает корректно и без ошибок
-gulp.task("install", () => {
-    return gulp.src('./package.json')
-        .pipe(gulp.dest("./build"))
-        .pipe(install());
-});
-
 gulp.task("json", () => {
     return gulp.src(path.src.json)
         .pipe(gulp.dest(path.build.json));
@@ -92,7 +84,13 @@ gulp.task("json", () => {
 gulp.task("server", function () {
     server.init({
         watch: true,
-        server: "./build"
+        server: 
+        {
+            baseDir: ["build"],
+            routes: {
+                "/node_modules": "node_modules"
+            }
+        }
     });
 
     gulp.watch(path.src.js, gulp.series("js"));
@@ -115,7 +113,6 @@ gulp.task("build", gulp.series(
     "json",
     "js",
     "css",
-    "install"
 ));
 
 gulp.task("default", gulp.series("build", "server"));

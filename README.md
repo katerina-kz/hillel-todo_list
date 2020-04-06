@@ -8,3 +8,6 @@ For running, print in terminal:
 
 1. First step - npm i
 2. Second step - gulp
+
+
+For stop watching files print ctrl+c
